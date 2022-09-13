@@ -1,0 +1,10 @@
+/*
+Message ( prompt , before|after|into )
+
+Message ( "test" , "into" )
+Message ( "test\r" , "before" ) -- to put test\r before the contents of the message box
+Message ( "test\r" , "after" ) -- to put "test\r" after the contents of the message box
+*/
+private handler Message ( in pPrompt as String, in pBeforeAfterInto as String ) returns nothing
+	execute script "put \q" & pPrompt & "\q" && pBeforeAfterInto && "msg"
+end handler

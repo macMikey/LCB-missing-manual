@@ -1,0 +1,35 @@
+/*
+Answer ( prompt , okButtonLabel , cancelButtonLabel )
+
+Examples:
+Answer ("Test" , "" , "" ) -- answer dialog with "OK" and "Cancel" buttons
+Answer ("Test" , "notOK" , "notCancel" ) -- answer dialog with "notOK" on the OK button and "notCancel" on the Cancel button
+Answer ("Test" , "OK!" , "" ) -- answer dialog with just an OK button labeled "OK!" (no cancel button)
+Answer ("Test" , "" , "No" ) -- answer dialog with "OK" on the OK button and "No" on the Cancel button
+*/
+private handler Answer (in pPrompt as String, in pOKLabel as String, in pCancelLabel as String) returns String
+	variable tCancelClause as String
+	variable tOKClause as String
+
+	-- <manage button labels>
+		if ( pCancelLabel is empty and pOKLabel is empty ) then
+			-- assume ok and cancel are both to be assigned
+			put "\qOK\q" into tOKClause
+			put "\qCancel\q" into tCancelClause
+		else if pCancelLabel is empty then
+			-- ok defined, but cancel is not, so assume only ok used
+			put the empty string into tCancelClause
+			put "\q" & pOKLabel & "\q" into tOKClause
+		else if pOKLabel is empty then
+			put "\qOK\q" into tOKClause
+			put "\q" & pCancelLabel & "\q" into tCancelClause
+		else 
+			-- both defined
+			put "\q" & pOKLabel & "\q" into tOKClause
+			put "\q" & pCancelLabel & "\q" into tCancelClause
+		end if --pCancelLabel is empty and pOKLabel is empty
+	--</manage button labels>
+
+   execute script "answer \q" & pPrompt & "\q with " & tOKClause && "and" && tCancelClause &"; return it"
+   return the result
+end handler
