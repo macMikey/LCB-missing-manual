@@ -1,10 +1,19 @@
 /*
-Message ( prompt , before|after|into )
+Message ( prompt , before|after|into|beforeLine|afterLine )
 
 Message ( "test" , "into" )
-Message ( "test\r" , "before" ) -- to put test\r before the contents of the message box
-Message ( "test\r" , "after" ) -- to put "test\r" after the contents of the message box
+Message ( "test" , "beforeLine" )
+Message ( "test" , "afterLine" )
 */
 private handler Message ( in pPrompt as String, in pBeforeAfterInto as String ) returns nothing
+	-- can't embed a "\r" when sending over the wall into LCS, so have to have extra options like these
+	if pBeforeAfterInto is "beforeLine" then
+		execute script "put cr before msg"
+		put "before" into pBeforeAfterInto
+	else if pBeforeAfterInto is "afterLine" then
+		execute script "put cr after msg"
+		put "after" into pBeforeAfterInto
+	end if
+
 	execute script "put \q" & pPrompt & "\q" && pBeforeAfterInto && "msg"
 end handler
