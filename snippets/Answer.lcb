@@ -10,15 +10,18 @@ Answer ("Test" , "" , "No" ) -- answer dialog with "OK" on the OK button and "No
 private handler Answer (in pPrompt as String, in pOKLabel as String, in pCancelLabel as String) returns String
 	variable tCancelClause as String
 	variable tOKClause as String
+	variable tConjunction as String
 
+	put the empty string into tConjunction
+	put the empty string into tCancelClause
 	-- <manage button labels>
 		if ( pCancelLabel is empty and pOKLabel is empty ) then
 			-- assume ok and cancel are both to be assigned
 			put "\qOK\q" into tOKClause
+			put "and" into tConjunction
 			put "\qCancel\q" into tCancelClause
 		else if pCancelLabel is empty then
 			-- ok defined, but cancel is not, so assume only ok used
-			put the empty string into tCancelClause
 			put "\q" & pOKLabel & "\q" into tOKClause
 		else if pOKLabel is empty then
 			put "\qOK\q" into tOKClause
@@ -26,10 +29,10 @@ private handler Answer (in pPrompt as String, in pOKLabel as String, in pCancelL
 		else 
 			-- both defined
 			put "\q" & pOKLabel & "\q" into tOKClause
+			put "and" into tConjunction
 			put "\q" & pCancelLabel & "\q" into tCancelClause
 		end if --pCancelLabel is empty and pOKLabel is empty
 	--</manage button labels>
-
-   execute script "answer \q" & pPrompt & "\q with " & tOKClause && "and" && tCancelClause &"; return it"
+   execute script "answer \q" & pPrompt & "\q with " & tCancelClause && tConjunction && tOKClause &"; return it"
    return the result
 end handler
