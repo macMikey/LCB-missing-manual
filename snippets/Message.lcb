@@ -1,5 +1,6 @@
 /*
 Message ( prompt , before|after|into|beforeLine|afterLine )
+Does NOT support the passing of carriage returns or quotes in any parameter.
 
 Message ( "test" , "into" )
 Message ( "test" , "beforeLine" )

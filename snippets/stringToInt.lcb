@@ -1,0 +1,26 @@
+/*
+stringToInt ( string ) -> integer
+Will always return an integer. If string is not a number, 0 will be returned.
+Reals are truncated.
+
+Can be called from setters to fix property values sent from the property inspector, because the property inspector will not
+filter/cleanse/force integers to be entered, even in com.livecode.pi.integer
+
+Examples:
+put stringToInt ( pString ) into mProperty
+put stringToInt ( "0" ) into mProperty -> 0
+put stringToInt ( "1.1" ) into mProperty -> 1
+put stringToInt ( "a" ) into mProperty -> 0
+*/
+
+private handler stringToInt ( in pString as String ) returns optional Integer
+	-- no matter what comes in as pString, we get an integer out, 0 or otherwise. reals are truncated
+	variable rNumber as optional Integer
+	parse pString as number into rNumber
+	if rNumber is nothing then
+		put 0 into rNumber
+	else
+		put rNumber - ( rNumber mod 1 ) into rNumber -- subtract the real part to get an integer
+	end if
+	return rNumber
+end handler

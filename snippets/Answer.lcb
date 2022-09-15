@@ -1,5 +1,6 @@
 /*
 Answer ( prompt , okButtonLabel , cancelButtonLabel )
+Does NOT support the passing of carriage returns or quote characters in any parameter.
 
 Examples:
 Answer ("Test" , "" , "" ) -- answer dialog with "OK" and "Cancel" buttons
