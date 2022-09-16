@@ -1,0 +1,1 @@
+﻿script "field fHandler Behavior"on returnInField   send "mouseUp" to button "crawlFiles"end returnInFieldon enterInField   returnInfieldend enterInField
